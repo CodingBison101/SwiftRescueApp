@@ -4,7 +4,7 @@
     "slug": "EmergencyApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/SillyGifs.gif",
+    "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -37,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "4db74367-9373-48d8-be71-a1143c23827a"
+      }
     }
   }
 }

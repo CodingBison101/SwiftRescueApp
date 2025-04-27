@@ -7,12 +7,18 @@ import {
   Modal, 
   SafeAreaView,
   StatusBar,
-  Alert,
-  Dimensions
+  Dimensions,
+  Image,
+  Platform
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import Constants from 'expo-constants';
 
 const windowWidth = Dimensions.get('window').width;
+
+const statusBarHeight = Platform.OS === 'android' 
+  ? Constants.statusBarHeight 
+  : StatusBar.currentHeight || 0;
 
 export default function App() {
   const router = useRouter();
@@ -21,108 +27,132 @@ export default function App() {
   const [featureDescription, setFeatureDescription] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const showFeature = (title: string, description: string) => {
+  const showFeature = (title: React.SetStateAction<string>, description: React.SetStateAction<string>) => {
     setFeatureTitle(title);
     setFeatureDescription(description);
     setFeatureModalVisible(true);
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      <SafeAreaView style={styles.container}>
       
-      {/* Top Login Button - Changed to match image */}
-      <View style={styles.loginContainer}>
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => router.push('/login')}>
-          <Text style={styles.loginButtonText}>
-            Login
-          </Text>
-          <Text style={styles.loginIcon}>👤</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.headerContainer}>
+          <View style={styles.appTitleContainer}>
+            <Image 
+              source={require('../../assets/images/icon.png')} 
+              style={styles.appIcon} 
+            />
+            <Text style={styles.appTitle}>Swift Rescue</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => router.push('/login')}>
+            <Text style={styles.loginButtonText}>Login</Text>
+            <Text style={styles.loginIcon}>👤</Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* Main Grid Buttons - Updated layout to be more rectangular */}
-      <View style={styles.buttonGrid}>
-        {/* Top Row */}
-        <View style={styles.row}>
-          <TouchableOpacity 
-            style={styles.gridButton} 
-            onPress={() => showFeature('Check Plans', 'View and manage your emergency plans and protocols.')}>
-            <Text style={styles.gridButtonText}>Check Plans</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={styles.gridButton}
-            onPress={() => router.push('/gethelp')}>
-            <Text style={styles.gridButtonText}>Get Help</Text>
-          </TouchableOpacity>
-        </View>
-        
-        {/* Center Emergency Button */}
-        <View style={styles.centerButtonContainer}>
-          <TouchableOpacity 
-            style={styles.centerButton}
-            onPress={() => router.push('/callforhelp')}>
-            <Text style={styles.centerButtonText}>Call{'\n'}for{'\n'}Help</Text>
-          </TouchableOpacity>
-        </View>
-        
-        {/* Bottom Row */}
-        <View style={styles.row}>
-          <TouchableOpacity 
-            style={styles.gridButton}
-            onPress={() => showFeature('Declare Alarm', 'Initiate alarm protocols for your organization.')}>
-            <Text style={styles.gridButtonText}>Declare{'\n'}alarm</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={styles.gridButton}
-            onPress={() => showFeature('Hazards Information', 'View current hazards and safety warnings in your area.')}>
-            <Text style={styles.gridButtonText}>Get{'\n'}Hazards{'\n'}Info</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Feature Modal - No changes */}
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={featureModalVisible}
-        onRequestClose={() => setFeatureModalVisible(false)}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>{featureTitle}</Text>
-            <Text style={styles.modalText}>{featureDescription}</Text>
+        <View style={styles.buttonGrid}>
+          <View style={styles.row}>
+            <TouchableOpacity 
+              style={styles.gridButton} 
+              onPress={() => router.push('/checkplans')}>
+              <Text style={styles.gridButtonText}>Check Plans</Text>
+            </TouchableOpacity>
             
-            <View style={styles.modalSingleButton}>
-              <TouchableOpacity 
-                style={[styles.modalButton, styles.confirmButton]}
-                onPress={() => setFeatureModalVisible(false)}>
-                <Text style={styles.confirmButtonText}>OK</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity 
+              style={styles.gridButton}
+              onPress={() => router.push('/gethelp')}>
+              <Text style={styles.gridButtonText}>Get Help</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.centerButtonContainer}>
+            <TouchableOpacity 
+              style={styles.centerButton}
+              onPress={() => router.push('/callforhelp')}>
+              <Text style={styles.centerButtonText}>Call{'\n'}for{'\n'}Help</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.row}>
+            <TouchableOpacity 
+              style={styles.gridButton}
+              onPress={() => showFeature('Declare Alarm', 'Initiate alarm protocols for your organization.')}>
+              <Text style={styles.gridButtonText}>Declare{'\n'}alarm</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              style={styles.gridButton}
+              onPress={() => showFeature('Hazards Information', 'View current hazards and safety warnings in your area.')}>
+              <Text style={styles.gridButtonText}>Get{'\n'}Hazards{'\n'}Info</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </Modal>
-    </SafeAreaView>
+
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={featureModalVisible}
+          onRequestClose={() => setFeatureModalVisible(false)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>{featureTitle}</Text>
+              <Text style={styles.modalText}>{featureDescription}</Text>
+              
+              <View style={styles.modalSingleButton}>
+                <TouchableOpacity 
+                  style={[styles.modalButton, styles.confirmButton]}
+                  onPress={() => setFeatureModalVisible(false)}>
+                  <Text style={styles.confirmButtonText}>OK</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      </SafeAreaView>
+    </View>
   );
 }
 
-// Updated styles to connect buttons and enlarge center button
 const styles = StyleSheet.create({
+  safeContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    // Add extra padding for Android devices
+    paddingTop: Platform.OS === 'android' ? statusBarHeight : 0,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
   },
-  loginContainer: {
+  headerContainer: {
     width: '100%',
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingTop: 15,
-    paddingRight: 15,
+    paddingHorizontal: 15,
     marginBottom: 10,
+    // Additional top margin for safety
+    marginTop: Platform.OS === 'android' ? 0 : 10,
+  },
+  appTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  appIcon: {
+    width: 30,
+    height: 30,
+    marginRight: 8,
+  },
+  appTitle: {
+    fontSize: 24,
+    color: '#e71b1b',
+    fontFamily: 'Didot',
   },
   loginButton: {
     backgroundColor: '#f0f0f0',
@@ -142,27 +172,28 @@ const styles = StyleSheet.create({
   },
   buttonGrid: {
     width: windowWidth,
-    height: '85%',  // Increased height to fill more of the screen
+    height: '80%', // Reduced from 85% to ensure it fits
     flexDirection: 'column',
-    justifyContent: 'center', // Changed to center to remove gap
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 4, // Small padding for margins
+    paddingHorizontal: 4,
+    marginTop: 10, // Added margin to ensure spacing from header
   },
   row: {
     width: '100%',
-    height: '45%', // Increased height of rows
+    height: '45%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 0, // Remove vertical margin between rows
+    marginVertical: 0,
   },
   gridButton: {
     backgroundColor: '#FF5500',
     width: '48%',
-    height: '98%', // Slightly reduced to allow minimal margin
+    height: '98%',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: '1%',
-    marginVertical: '1%', // Minimal vertical margin to create visual separation
+    marginVertical: '1%',
   },
   gridButtonText: {
     color: 'white',
@@ -173,24 +204,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '50%',
     left: '50%',
-    width: 180, // Increased from 150
-    height: 180, // Increased from 150
-    marginLeft: -90, // Half of width
-    marginTop: -90, // Half of height
+    width: 180,
+    height: 180,
+    marginLeft: -90,
+    marginTop: -90,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 10,
   },
   centerButton: {
-    width: 180, // Increased from 150
-    height: 180, // Increased from 150
-    borderRadius: 90, // Half of width/height
+    width: 180,
+    height: 180,
+    borderRadius: 90,
     backgroundColor: '#e71b1b',
-    borderWidth: 10, // Increased from 8
+    borderWidth: 10,
     borderColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 8, // Increased shadow
+    elevation: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.4,
@@ -198,7 +229,7 @@ const styles = StyleSheet.create({
   },
   centerButtonText: {
     color: 'white',
-    fontSize: 30, // Increased from 26
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
   },
