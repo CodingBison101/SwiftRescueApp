@@ -37,21 +37,6 @@ export default function CheckPlans() {
           <Text style={styles.mapPlaceholderText}>Map Goes Here</Text>
           <Text style={styles.mapPlaceholderSubtext}>To be implemented in the Future</Text>
                   </View>
-
-                <View style={styles.profileContainer}>
-          <Image 
-            source={require('../assets/images/SillyGifs.gif')} 
-            style={styles.profileImage}
-            defaultSource={require('../assets/images/icon.png')} // Fallback to app icon if profile image is missing
-          />
-          <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>Robert willam</Text>
-          </View>
-          <TouchableOpacity style={styles.callButton}>
-            <Text style={styles.callButtonIcon}>📞</Text>
-          </TouchableOpacity>
-        </View>
-
         </SafeAreaView>
     </View>
   );

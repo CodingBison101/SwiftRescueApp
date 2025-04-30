@@ -44,7 +44,10 @@ export default function App() {
               source={require('../../assets/images/icon.png')} 
               style={styles.appIcon} 
             />
-            <Text style={styles.appTitle}>Swift Rescue</Text>
+            <Image 
+              source={require('../../assets/images/title.png')} 
+              style={styles.appIcon} 
+            />
           </View>
           <TouchableOpacity
             style={styles.loginButton}
@@ -138,16 +141,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 10,
     // Additional top margin for safety
-    marginTop: Platform.OS === 'android' ? 0 : 10,
+    marginTop: Platform.OS === 'android' ? 0 : 8,
   },
   appTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: -15,
   },
   appIcon: {
-    width: 30,
-    height: 30,
-    marginRight: 8,
+    width: 100,
+    height: 100,
+    
   },
   appTitle: {
     fontSize: 24,
