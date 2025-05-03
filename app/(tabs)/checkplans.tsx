@@ -28,10 +28,24 @@ export default function CheckPlans() {
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <SafeAreaView style={styles.container}>
         {/* Status Banner */}
-        <View style={styles.statusBanner}>
-          <Text style={styles.statusTitle}>Fire service team is on the way</Text>
-          <Text style={styles.statusSubtitle}>Arriving in 5 minutes</Text>
-        </View>
+        <View style={styles.headerContainer}>
+                  <View style={styles.appTitleContainer}>
+                    <Image 
+                      source={require('../../assets/images/icon.png')} 
+                      style={styles.appIcon} 
+                    />
+                    <Image 
+                      source={require('../../assets/images/title.png')} 
+                      style={styles.appTitle} 
+                    />
+                  </View>
+                  <TouchableOpacity
+                    style={styles.loginButton}
+                    onPress={() => router.push('/login')}>
+                    <Text style={styles.loginButtonText}>Login</Text>
+                    <Text style={styles.loginIcon}>👤</Text>
+                  </TouchableOpacity>
+                </View>
 
                 <View style={styles.mapPlaceholder}>
           <Text style={styles.mapPlaceholderText}>Map Goes Here</Text>
@@ -43,6 +57,47 @@ export default function CheckPlans() {
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 15,
+    paddingHorizontal: 15,
+    marginBottom: 10,
+    marginTop: Platform.OS === 'android' ? 0 : 8,
+  },
+  appTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: -15,
+  },
+  appIcon: {
+    width: 50,
+    height: 50,
+  },
+  appTitle: {
+    width: 130,
+    height: 50,
+    marginBottom: 5,
+  },
+  loginButton: {
+    backgroundColor: '#f0f0f0',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  loginButtonText: {
+    fontSize: 22,
+    marginRight: 10,
+  },
+  loginIcon: {
+    fontSize: 24,
+    opacity: 0.6,
+  },
   safeContainer: {
     flex: 1,
     backgroundColor: '#fff',

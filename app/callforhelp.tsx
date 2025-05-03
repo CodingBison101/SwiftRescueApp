@@ -71,22 +71,9 @@ export default function CallForHelpPage() {
     <View style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <SafeAreaView style={styles.container}>
-        {/* Header with back button */}
-        <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButtonContainer} 
-            onPress={() => router.back()}
-          >
-            <Text style={styles.backButtonText}>←</Text>
-            <Text style={styles.headerTitle}>Back</Text>
-          </TouchableOpacity>
-        </View>
-        
-        {/* Case selection section */}
         <View style={styles.caseSection}>
           <Text style={styles.caseTitle}>What is your case:</Text>
           
-          {/* Case option buttons */}
           {caseOptions.map((caseType, index) => (
             <TouchableOpacity 
               key={index}
@@ -342,6 +329,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   confirmButton: {
+    justifyContent: 'center',
     backgroundColor: '#FF5500',
   },
   confirmButtonText: {
@@ -349,6 +337,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   modalSingleButton: {
+    alignItems: 'center',
     marginTop: 20,
     width: '100%',
   },

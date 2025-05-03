@@ -46,7 +46,7 @@ export default function App() {
             />
             <Image 
               source={require('../../assets/images/title.png')} 
-              style={styles.appIcon} 
+              style={styles.appTitle} 
             />
           </View>
           <TouchableOpacity
@@ -150,14 +150,13 @@ const styles = StyleSheet.create({
     marginLeft: -15,
   },
   appIcon: {
-    width: 100,
-    height: 100,
-    
+    width: 50,
+    height: 50,
   },
   appTitle: {
-    fontSize: 24,
-    color: '#e71b1b',
-    fontFamily: 'Didot',
+    width: 130,
+    height: 50,
+    marginBottom: 5,
   },
   loginButton: {
     backgroundColor: '#f0f0f0',

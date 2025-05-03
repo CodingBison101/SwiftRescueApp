@@ -23,18 +23,6 @@ export default function GetHelpPage() {
     <View style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <SafeAreaView style={styles.container}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButtonContainer}
-            onPress={() => router.back()}
-          >
-            <Text style={styles.backButtonText}>←</Text>
-            <Text style={styles.headerTitle}>Back</Text>
-          </TouchableOpacity>
-        </View>
-        
-        {/* Shield Icon */}
         <View style={styles.iconContainer}>
           <Image 
             source={require('../assets/images/get_help_icons/shieldicon.png')} 
@@ -89,37 +77,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   // Update these style definitions
-header: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  paddingHorizontal: 20,
-  paddingBottom: 15,
-  marginTop: Platform.OS === 'ios' ? 8 : 10,
-  paddingTop: 15,
-},
-backButtonContainer: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  backgroundColor: '#f0f0f0',
-  paddingVertical: 8,
-  paddingHorizontal: 16,
-  borderRadius: 25, // This creates the cylinder shape
-  borderWidth: 1,
-  borderColor: '#e0e0e0',
-},
-backButton: {
-  // Removed as we're now using backButtonContainer
-},
-backButtonText: {
-  fontSize: 24,
-  color: '#000',
-  marginRight: 10,
-},
-headerTitle: {
-  fontSize: 28,
-  fontWeight: '500',
-  color: '#333',
-},
   iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
