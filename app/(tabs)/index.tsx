@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { styles, colors } from '../styles/styles.js';
 import { 
   StyleSheet, 
   View, 
@@ -83,13 +84,13 @@ export default function App() {
           <View style={styles.row}>
             <TouchableOpacity 
               style={styles.gridButton}
-              onPress={() => showFeature('Declare Alarm', 'Initiate alarm protocols for your organization.')}>
+              onPress={() => router.push('/declare_alarm')}>
               <Text style={styles.gridButtonText}>Declare{'\n'}alarm</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 
               style={styles.gridButton}
-              onPress={() => showFeature('Hazards Information', 'View current hazards and safety warnings in your area.')}>
+              onPress={() => router.push('/gethazard')}>
               <Text style={styles.gridButtonText}>Get{'\n'}Hazards{'\n'}Info</Text>
             </TouchableOpacity>
           </View>
@@ -119,7 +120,7 @@ export default function App() {
     </View>
   );
 }
-
+/*
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
@@ -291,4 +292,4 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: '#333',
   },
-});
+});*/

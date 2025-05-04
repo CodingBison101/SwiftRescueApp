@@ -1,24 +1,26 @@
-import React from 'react';
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
-  TouchableOpacity, 
+import React from "react";
+import { styles, colors } from "../styles/styles.js";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
   SafeAreaView,
   Image,
   Dimensions,
   Platform,
-  StatusBar
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import Constants from 'expo-constants';
+  StatusBar,
+} from "react-native";
+import { useRouter } from "expo-router";
+import Constants from "expo-constants";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
-const statusBarHeight = Platform.OS === 'android' 
-  ? Constants.statusBarHeight 
-  : StatusBar.currentHeight || 0;
+const statusBarHeight =
+  Platform.OS === "android"
+    ? Constants.statusBarHeight
+    : StatusBar.currentHeight || 0;
 
 export default function CheckPlans() {
   const router = useRouter();
@@ -29,34 +31,37 @@ export default function CheckPlans() {
       <SafeAreaView style={styles.container}>
         {/* Status Banner */}
         <View style={styles.headerContainer}>
-                  <View style={styles.appTitleContainer}>
-                    <Image 
-                      source={require('../../assets/images/icon.png')} 
-                      style={styles.appIcon} 
-                    />
-                    <Image 
-                      source={require('../../assets/images/title.png')} 
-                      style={styles.appTitle} 
-                    />
-                  </View>
-                  <TouchableOpacity
-                    style={styles.loginButton}
-                    onPress={() => router.push('/login')}>
-                    <Text style={styles.loginButtonText}>Login</Text>
-                    <Text style={styles.loginIcon}>👤</Text>
-                  </TouchableOpacity>
-                </View>
+          <View style={styles.appTitleContainer}>
+            <Image
+              source={require("../../assets/images/icon.png")}
+              style={styles.appIcon}
+            />
+            <Image
+              source={require("../../assets/images/title.png")}
+              style={styles.appTitle}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => router.push("/login")}
+          >
+            <Text style={styles.loginButtonText}>Login</Text>
+            <Text style={styles.loginIcon}>👤</Text>
+          </TouchableOpacity>
+        </View>
 
-                <View style={styles.mapPlaceholder}>
+        <View style={styles.mapPlaceholder}>
           <Text style={styles.mapPlaceholderText}>Map Goes Here</Text>
-          <Text style={styles.mapPlaceholderSubtext}>To be implemented in the Future</Text>
-                  </View>
-        </SafeAreaView>
+          <Text style={styles.mapPlaceholderSubtext}>
+            We Wait for uncle Islam.
+          </Text>
+        </View>
+      </SafeAreaView>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
   headerContainer: {
     width: '100%',
     flexDirection: 'row',
@@ -190,4 +195,4 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'white',
   },
-});
+});*/
