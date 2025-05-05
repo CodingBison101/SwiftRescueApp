@@ -1,21 +1,22 @@
-import React from 'react';
-import { styles, colors } from './styles/styles.js';
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
+import React from "react";
+import { styles, colors } from "./styles/styles.js";
+import {
+  StyleSheet,
+  View,
+  Text,
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
   Image,
-  Platform
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import Constants from 'expo-constants';
+  Platform,
+} from "react-native";
+import { useRouter } from "expo-router";
+import Constants from "expo-constants";
 
-const statusBarHeight = Platform.OS === 'android' 
-  ? Constants.statusBarHeight 
-  : StatusBar.currentHeight || 0;
+const statusBarHeight =
+  Platform.OS === "android"
+    ? Constants.statusBarHeight
+    : StatusBar.currentHeight || 0;
 
 export default function GetHelpPage() {
   const router = useRouter();
@@ -25,40 +26,40 @@ export default function GetHelpPage() {
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <SafeAreaView style={styles.container}>
         <View style={styles.iconContainer}>
-          <Image 
-            source={require('../assets/images/get_help_icons/shieldicon.png')} 
+          <Image
+            source={require("../assets/images/get_help_icons/shieldicon.png")}
             style={styles.shieldIconImage}
             resizeMode="contain"
           />
         </View>
-        
+
         {/* Help Options */}
         <View style={styles.optionsContainer}>
           <TouchableOpacity style={styles.optionButton}>
-              <Image 
-                source={require('../assets/images/get_help_icons/3916603 1.png')} 
-                style={styles.optionIconImage}
-                resizeMode="contain"
-              />
+            <Image
+              source={require("../assets/images/get_help_icons/3916603 1.png")}
+              style={styles.optionIconImage}
+              resizeMode="contain"
+            />
             <Text style={styles.optionText}>Chat with Rescuers</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity style={styles.optionButton}>
-              <Image 
-                source={require('../assets/images/get_help_icons/brand-github-copilot_.png')} 
-                style={styles.optionIconImage}
-                resizeMode="contain"
-              />
+            <Image
+              source={require("../assets/images/get_help_icons/brand-github-copilot_.png")}
+              style={styles.optionIconImage}
+              resizeMode="contain"
+            />
             <Text style={styles.optionText}>Chat-bot</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity style={styles.optionButton}>
-              <Image 
-                source={require('../assets/images/get_help_icons/video-play-button.png')} 
-                style={styles.optionIconImage}
-                resizeMode="contain"
-              />
-              <Text style={styles.optionText}>First-aid videos</Text>
+            <Image
+              source={require("../assets/images/get_help_icons/video-play-button.png")}
+              style={styles.optionIconImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.optionText}>First-aid videos</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
