@@ -1,5 +1,4 @@
-// styles.js
-import { StyleSheet, Platform, Dimensions, StatusBar } from "react-native";
+import { Dimensions, Platform, StatusBar, StyleSheet } from "react-native";
 
 // Constants
 const { height: windowHeight } = Dimensions.get("window");
@@ -255,10 +254,10 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.4,
-    shadowRadius: 5,
+    boxshadowColor: "#000",
+    boxshadowOffset: { width: 0, height: 3 },
+    boxshadowOpacity: 0.4,
+    boxshadowRadius: 5,
   },
   gridButtonText: {
     color: "white",
