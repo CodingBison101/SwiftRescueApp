@@ -22,12 +22,12 @@ export default function SettingsPage() {
   const router = useRouter();
 
   const settingsOptions = [
-    { title: "Account", action: () => console.log("Navigate to Account") },
-    { title: "Notifications", action: () => console.log("Navigate to Notifications") },
-    { title: "Privacy", action: () => console.log("Navigate to Privacy") },
-    { title: "Help & Support", action: () => console.log("Navigate to Help") },
-    { title: "About", action: () => console.log("Navigate to About") },
-    { title: "Logout", action: () => console.log("Perform Logout") },
+    { title: "Account", action: () => router.push('/account') },
+    { title: "Notifications", action: () => router.push('/notifications') },
+    { title: "Privacy", action: () => router.push('/privacy') },
+    { title: "Help & Support", action: () => router.push('/helpandsupport') },
+    { title: "About", action: () => router.push('/about') },
+    { title: "Logout", action: () => router.push('/logout') },
   ];
 
   return (

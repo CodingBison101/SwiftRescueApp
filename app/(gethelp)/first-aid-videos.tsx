@@ -1,5 +1,6 @@
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
+import React from 'react';
 import { FlatList, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const statusBarHeight =
@@ -9,8 +10,9 @@ const statusBarHeight =
 
 // Sample data for videos - replace with your actual data source
 const FIRST_AID_VIDEOS_DATA = [
-  { id: '1', title: 'Fire At Level 1', description: 'Fire in amphi 2.' },
-  { id: '2', title: 'Gaz Leak at Level 2', description: 'Gaz Leak at TP 7.' },
+  { id: '1', title: 'CPR Tutorial', description: 'Learn how to perform CPR.' },
+  { id: '2', title: 'Choking: First Aid', description: 'What to do if someone is choking.' },
+  { id: '3', title: 'Burn Treatment', description: 'First aid for minor burns.' },
   // Add more videos
 ];
 
@@ -37,7 +39,15 @@ export default function FirstAidVideosScreen() {
     <VideoItem
       title={item.title}
       description={item.description}
-      onPress={() => router.push('/checkplans')}
+      onPress={() => {
+        router.push({
+          pathname: `/resources/${item.id}`, // Navigate to your dynamic route in the 'resources' directory
+          // Pass other item details as query parameters.
+          // These will be accessible in 'app/resources/[id].tsx' via useLocalSearchParams().
+          // The 'id' itself is part of the pathname and also accessible via useLocalSearchParams().
+          params: { title: item.title, description: item.description },
+        });
+      }}
     />
   );
 
@@ -49,7 +59,7 @@ export default function FirstAidVideosScreen() {
           data={FIRST_AID_VIDEOS_DATA}
           renderItem={renderItem}
           keyExtractor={item => item.id}
-          ListHeaderComponent={<Text style={styles.title}>Hazards List</Text>}
+          ListHeaderComponent={<Text style={styles.title}>First-Aid Videos</Text>}
         />
       </View>
     </SafeAreaView>

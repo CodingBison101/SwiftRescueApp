@@ -1,7 +1,12 @@
 import { useAudioPlayer } from "expo-audio";
 import Constants from "expo-constants";
 import { useRouter } from "expo-router";
+<<<<<<< Updated upstream
 import React, { useState } from "react";
+=======
+import { styles } from "./styles/styles.js";
+import React, { useState, useRef } from "react";
+>>>>>>> Stashed changes
 import {
   Modal,
   Platform,
@@ -9,29 +14,50 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+<<<<<<< Updated upstream
   TouchableOpacity,
   View,
+=======
+  TextInput,
+  TouchableOpacity,
+  View,
+  Animated,
+>>>>>>> Stashed changes
 } from "react-native";
 import {
   GestureHandlerRootView,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
+<<<<<<< Updated upstream
 
 const statusBarHeight =
   Platform.OS === "android"
     ? Constants.statusBarHeight
     : StatusBar.currentHeight || 0;
+=======
+>>>>>>> Stashed changes
 
 export default function CallForHelpPage() {
   const router = useRouter();
   const [selectedCase, setSelectedCase] = useState<string | null>(null);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+<<<<<<< Updated upstream
+=======
+  const [otherCaseText, setOtherCaseText] = useState<string>(""); // State for "Other" text input
+>>>>>>> Stashed changes
   const [confirmType, setConfirmType] = useState<"self" | "others" | null>(
     null
   );
   const [successModalVisible, setSuccessModalVisible] = useState(false);
 
+<<<<<<< Updated upstream
   const caseOptions = ["Stuck", "In Danger", "Depressed", "Happy", "Other"];
+=======
+  const animatedHeight = useRef(new Animated.Value(0)).current;
+  const animatedOpacity= useRef(new Animated.Value(0)).current;
+
+  const caseOptions = ["Stuck", "In Danger", "Other"];
+>>>>>>> Stashed changes
   const audioSource = [
     require("../assets/sounds/siren.mp3"),
     require("../assets/sounds/siren-imed1.mp3"),
@@ -53,6 +79,33 @@ export default function CallForHelpPage() {
   };
   const handleCaseSelection = (caseType: string) => {
     setSelectedCase(caseType);
+    if (caseType === "Other") {
+      Animated.parallel([
+        Animated.timing(animatedHeight, {
+          toValue: 55,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+        Animated.timing(animatedOpacity, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    } else {
+      Animated.parallel([
+        Animated.timing(animatedHeight, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+        Animated.timing(animatedOpacity, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: false,
+        }),
+      ]).start(() => setOtherCaseText(""));
+    }
   };
 
   const handleSelfAlert = () => {
@@ -60,6 +113,13 @@ export default function CallForHelpPage() {
       alert("Please select your case first");
       return;
     }
+<<<<<<< Updated upstream
+=======
+    if (selectedCase === "Other" && !otherCaseText.trim()) {
+      alert("Please provide details for 'Other'");
+      return;
+    }
+>>>>>>> Stashed changes
     setConfirmType("self");
     setConfirmModalVisible(true);
   };
@@ -69,6 +129,13 @@ export default function CallForHelpPage() {
       alert("Please select your case first");
       return;
     }
+<<<<<<< Updated upstream
+=======
+    if (selectedCase === "Other" && !otherCaseText.trim()) {
+      alert("Please provide details for 'Other'");
+      return;
+    }
+>>>>>>> Stashed changes
     setConfirmType("others");
     setConfirmModalVisible(true);
   };
@@ -90,6 +157,7 @@ export default function CallForHelpPage() {
     <View style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <SafeAreaView style={styles.container}>
+<<<<<<< Updated upstream
         <View style={styles.caseSection}>
           <Text style={styles.caseTitle}>What is your case:</Text>
 
@@ -111,12 +179,65 @@ export default function CallForHelpPage() {
 
           {/* Action buttons */}
           <View style={styles.actionButtonsContainer}>
+=======
+        <View style={localstyles.caseSection}>
+          <Text style={localstyles.caseTitle}>What is your case:</Text>
+
+          {caseOptions.map((caseType, index) => (
+            <View key={index}>
+              <TouchableOpacity
+                style={[
+                  localstyles.caseOption,
+                  selectedCase === caseType && localstyles.selectedCaseOption,
+                ]}
+                onPress={() => handleCaseSelection(caseType)}
+              >
+                <Text style={localstyles.caseOptionText}>{caseType}</Text>
+              </TouchableOpacity>
+              {caseType === "Other" && (
+                <Animated.View
+                  style={{
+                    overflow: "hidden",
+                    height: animatedHeight,
+                    opacity: animatedOpacity,
+                  }}
+                >
+                  <TextInput
+                    style={{
+                      backgroundColor: "#f8f8f8",
+                      borderRadius: 8,
+                      padding: 10,
+                      marginTop: 10,
+                      borderWidth: 1,
+                      borderColor: "#ddd",
+                      fontSize: 16,
+                    }}
+                    placeholder="Please specify your case..."
+                    value={otherCaseText}
+                    onChangeText={setOtherCaseText}
+                  />
+                </Animated.View>
+              )}
+            </View>
+          ))}
+          <View style={localstyles.actionButtonsContainer}>
+>>>>>>> Stashed changes
             <TouchableOpacity
               style={styles.actionButton}
               onPress={handleSelfAlert}
             >
-              <View style={styles.userIcon}>
-                <Text style={styles.iconText}>👤</Text>
+              <View
+                style={{
+                  marginBottom: 8,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 24,
+                  }}
+                >
+                  👤
+                </Text>
               </View>
               <Text style={styles.actionButtonText}>Self-alert</Text>
             </TouchableOpacity>
@@ -125,12 +246,17 @@ export default function CallForHelpPage() {
               style={styles.actionButton}
               onPress={handleAlertForOthers}
             >
-              <View style={styles.groupIcon}>
-                <Text style={styles.iconText}>👥</Text>
+              <View
+                style={{
+                  marginBottom: 8,
+                }}
+              >
+                <Text style={{ fontSize: 24 }}>👥</Text>
               </View>
               <Text style={styles.actionButtonText}>Alert for others</Text>
             </TouchableOpacity>
           </View>
+<<<<<<< Updated upstream
 
           <GestureHandlerRootView>
             <TouchableWithoutFeedback
@@ -141,8 +267,18 @@ export default function CallForHelpPage() {
             </TouchableWithoutFeedback>
           </GestureHandlerRootView>
         </View>
+=======
+>>>>>>> Stashed changes
 
-        {/* Confirmation Modal */}
+          <GestureHandlerRootView>
+            <TouchableWithoutFeedback
+              style={localstyles.alarmIconContainer}
+              onPress={() => playAudio()}
+            >
+              <Text style={localstyles.alarmIcon}>🚨</Text>
+            </TouchableWithoutFeedback>
+          </GestureHandlerRootView>
+        </View>
         <Modal
           animationType="fade"
           transparent={true}
@@ -158,7 +294,11 @@ export default function CallForHelpPage() {
                   : "Are you sure you want to alert authorities on behalf of someone else?"}
               </Text>
 
+<<<<<<< Updated upstream
               <View style={styles.modalButtons}>
+=======
+              <View style={localstyles.modalButtons}>
+>>>>>>> Stashed changes
                 <TouchableOpacity
                   style={[styles.modalButton, styles.cancelButton]}
                   onPress={() => setConfirmModalVisible(false)}
@@ -186,7 +326,7 @@ export default function CallForHelpPage() {
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
-              <Text style={styles.successIcon}>✅</Text>
+              <Text style={localstyles.successIcon}>✅</Text>
               <Text style={styles.modalTitle}>Alert Sent</Text>
               <Text style={styles.modalText}>
                 Thank you, Authorities have been alerted.
@@ -207,7 +347,80 @@ export default function CallForHelpPage() {
     </View>
   );
 }
+const localstyles = StyleSheet.create({
+  caseSection: {
+    flex: 1,
+    padding: 20,
+  },
+  caseTitle: {
+    fontSize: 28,
+    fontWeight: "500",
+    marginBottom: 20,
+  },
+  caseOption: {
+    backgroundColor: "#f8f8f8",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  selectedCaseOption: {
+    backgroundColor: "#f0f0f0",
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  caseOptionText: {
+    fontSize: 18,
+  },
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  actionButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 30,
+    paddingHorizontal: 10,
+  },
+  alarmIconContainer: {
+    alignItems: "center",
+    marginTop: 40,
+  },
+  alarmIcon: {
+    fontSize: 60,
+  },
+  successIcon: {
+    fontSize: 60,
+    marginBottom: 10,
+  },
+});
+/*
+  backButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f0f0f0",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 25, // This creates the cylinder shape
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: "#000",
+    marginRight: 10,
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: "500",
+    color: "#333",
+  },
 
+<<<<<<< Updated upstream
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
@@ -274,16 +487,22 @@ const styles = StyleSheet.create({
   caseOptionText: {
     fontSize: 18,
   },
+=======
+>>>>>>> Stashed changes
   arrowIcon: {
     fontSize: 16,
     color: "#888",
   },
+<<<<<<< Updated upstream
   actionButtonsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 30,
     paddingHorizontal: 10,
   },
+=======
+  
+>>>>>>> Stashed changes
   actionButton: {
     backgroundColor: "#FF5500",
     borderRadius: 10,
@@ -335,11 +554,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
   },
+<<<<<<< Updated upstream
   modalButtons: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
   },
+=======
+ 
+>>>>>>> Stashed changes
   modalButton: {
     padding: 10,
     borderRadius: 5,
@@ -366,8 +589,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: "100%",
   },
+<<<<<<< Updated upstream
   successIcon: {
     fontSize: 60,
     marginBottom: 10,
   },
 });
+=======
+  ,
+});
+*/
+>>>>>>> Stashed changes

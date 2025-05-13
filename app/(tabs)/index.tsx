@@ -1,19 +1,18 @@
+import Constants from 'expo-constants';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { styles, colors } from '../styles/styles.js';
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
-  TouchableOpacity, 
-  Modal, 
-  SafeAreaView,
-  StatusBar,
+import {
   Dimensions,
   Image,
-  Platform
+  Modal,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import Constants from 'expo-constants';
+import { styles } from '../styles/styles.js';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -85,7 +84,7 @@ export default function App() {
             <TouchableOpacity 
               style={styles.gridButton}
               onPress={() => router.push('/declare_alarm')}>
-              <Text style={styles.gridButtonText}>Declare{'\n'}alarm</Text>
+              <Text style={styles.gridButtonText}>Declare{'\n'}Hazard</Text>
             </TouchableOpacity>
             
             <TouchableOpacity 

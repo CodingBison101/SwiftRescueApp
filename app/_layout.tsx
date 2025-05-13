@@ -31,7 +31,12 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'light' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="callforhelp" options={ {headerTitle: "Back"}} />
+        <Stack.Screen name="declare_alarm" options={ {headerTitle: "Back"}} />
+        
+        <Stack.Screen name="gethazard" options={ {headerTitle: "Back"}} />
+        <Stack.Screen name="gethelp" options={ {headerTitle: "Back"}} />
+        <Stack.Screen name="login" options={ {headerTitle: "Back"}} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
