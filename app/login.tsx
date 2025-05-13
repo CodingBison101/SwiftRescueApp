@@ -74,15 +74,12 @@ export default function LoginPage() {
             <Text style={styles.rememberText}>Remember Me</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/forgetpassword")}>
             <Text style={styles.forgotText}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-          style={localStyles.Button}
-          onPress={handleLogin}
-        >
+        <TouchableOpacity style={localStyles.Button} onPress={handleLogin}>
           <Text style={localStyles.LoginText}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -100,17 +97,17 @@ const localStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  LoginText:{
+  LoginText: {
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
   },
-  Button:{
+  Button: {
     backgroundColor: "#FF5500",
     borderRadius: 25,
     padding: 15,
     alignItems: "center",
-  }
+  },
 });
 /*
 const styles = StyleSheet.create({

@@ -1,14 +1,12 @@
-import { Dimensions, Platform, StatusBar, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 
 // Constants
 const { height: windowHeight } = Dimensions.get("window");
-const statusBarHeight = Platform.OS === "android" ? StatusBar.currentHeight : 0;
 
 export const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
   },
   container: {
     flex: 1,

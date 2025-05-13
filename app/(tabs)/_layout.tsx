@@ -1,13 +1,13 @@
-import { Tabs } from "expo-router";
-import React from "react";
-import { Platform } from "react-native";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Tabs } from "expo-router";
+import React from "react";
+import { Platform } from "react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -17,7 +17,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
+        tabBarButton:  HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
@@ -54,6 +54,17 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="(settings)"
+        options={{
+          href: null,
+          title: "Settings",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="settings" size={24} color="gray" />
+          ),
+        }}
+      />
     </Tabs>
+    
   );
 }
