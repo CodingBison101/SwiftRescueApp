@@ -1,23 +1,29 @@
-import React, { useState } from "react";
-import { styles, colors } from "./styles/styles.js";
+import * as Font from "expo-font";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
+  Alert,
+  SafeAreaView,
+  StatusBar,
   StyleSheet,
-  View,
   Text,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-  Image,
-  Alert,
+  View,
 } from "react-native";
-import { useRouter } from "expo-router";
-
+import { styles } from "../../../assets/styles/styles.js";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    Font.loadAsync({
+      "ADLaM Display": require("../../../assets/fonts/ADLaMDisplay-Regular.ttf"),
+    }).then(() => setFontsLoaded(true));
+  }, []);
 
   const handleLogin = () => {
     if (username && password) {
@@ -27,13 +33,53 @@ export default function LoginPage() {
     }
   };
 
+  if (!fontsLoaded) return null;
+
   return (
     <SafeAreaView style={localStyles.Container}>
       <StatusBar barStyle="light-content" backgroundColor="#FF5500" />
+      <View style={localStyles.header}>
+        <TouchableOpacity
+          onPress={() => router.replace("/")}
+          style={styles.backButton}
+        >
+          <Text
+            style={{
+              fontSize: 28,
+              fontWeight: "500",
+              color: "white",
+            }}
+          >
+            ‹ Back
+          </Text>
+        </TouchableOpacity>
+
+        <View style={{ width: 40 }} />
+      </View>
 
       <View style={styles.topSection}>
-        <Text style={styles.loginText}>Login</Text>
-        <Text style={styles.belowText}>Below</Text>
+        <Text
+          style={{
+            marginLeft: -150,
+            alignSelf: "center",
+            color: "white",
+            fontSize: 75,
+            fontFamily: "ADLaM Display",
+          }}
+        >
+          Login
+        </Text>
+        <Text
+          style={{
+            alignSelf: "center",
+            color: "white",
+            fontSize: 75,
+            marginLeft: 70,
+            fontFamily: "ADLaM Display",
+          }}
+        >
+          Below
+        </Text>
       </View>
       <View style={styles.formSection}>
         <View style={styles.inputContainer}>
@@ -88,6 +134,11 @@ export default function LoginPage() {
 }
 
 const localStyles = StyleSheet.create({
+  header: {
+    backgroundColor: "#FF5500",
+    flexDirection: "row",
+    alignItems: "center",
+  },
   iconContainer: {
     position: "absolute",
     right: 15,

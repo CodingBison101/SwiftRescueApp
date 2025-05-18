@@ -65,6 +65,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  backButton: {
+    padding: 10,
+  },
   modalButton: {
     padding: 10,
     borderRadius: 5,
@@ -153,17 +156,7 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
-  loginText: {
-    color: "white",
-    fontSize: 75,
-    fontFamily: "Instrument Sans",
-  },
-  belowText: {
-    color: "white",
-    fontSize: 75,
-    marginLeft: 110,
-    fontFamily: "Instrument Sans",
-  },
+
   formSection: {
     flex: 1,
     paddingHorizontal: 40,

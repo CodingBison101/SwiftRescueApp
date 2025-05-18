@@ -1,17 +1,17 @@
-import React from "react";
-import { styles } from "../styles/styles.js"; // Assuming you want to use shared styles
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-  Platform,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
-import { useRouter } from "expo-router";
 import Constants from "expo-constants";
+import { useRouter } from "expo-router";
+import React from "react";
+import {
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import { styles } from "../../assets/styles/styles.js"; // Assuming you want to use shared styles
 
 const statusBarHeight =
   Platform.OS === "android"

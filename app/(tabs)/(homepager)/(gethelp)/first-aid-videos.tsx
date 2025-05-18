@@ -13,6 +13,7 @@ const FIRST_AID_VIDEOS_DATA = [
   { id: '1', title: 'CPR Tutorial', description: 'Learn how to perform CPR.' },
   { id: '2', title: 'Choking: First Aid', description: 'What to do if someone is choking.' },
   { id: '3', title: 'Burn Treatment', description: 'First aid for minor burns.' },
+  { id: '4', title: 'Pedophilia', description: 'A minor is being raped at amphi 4.' },
   // Add more videos
 ];
 
@@ -41,11 +42,8 @@ export default function FirstAidVideosScreen() {
       description={item.description}
       onPress={() => {
         router.push({
-          pathname: `/resources/${item.id}`, // Navigate to your dynamic route in the 'resources' directory
-          // Pass other item details as query parameters.
-          // These will be accessible in 'app/resources/[id].tsx' via useLocalSearchParams().
-          // The 'id' itself is part of the pathname and also accessible via useLocalSearchParams().
-          params: { title: item.title, description: item.description },
+          pathname: "/resource/[id]", 
+          params: { id: item.id, title: item.title, description: item.description },
         });
       }}
     />

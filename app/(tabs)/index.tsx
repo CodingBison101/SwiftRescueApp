@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { styles } from '../styles/styles.js';
+import { styles } from '../../assets/styles/styles.js';
 
 const windowWidth = Dimensions.get('window').width;
 

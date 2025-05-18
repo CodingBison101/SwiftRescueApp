@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import { styles } from "./styles/styles.js";
+import { styles } from "../../../assets/styles/styles.js";
 
 const statusBarHeight =
   Platform.OS === "android"
@@ -23,10 +23,28 @@ export default function GetHelpPage() {
   return (
     <View style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      
       <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+                <TouchableOpacity
+                  onPress={() => router.replace("/")}
+                  style={styles.backButton}
+                >
+                  <Text
+                    style={{
+                      fontSize: 28,
+                      fontWeight: "500",
+                    }}
+                  >
+                    ‹ Back
+                  </Text>
+                </TouchableOpacity>
+        
+                <View style={{ width: 40 }} />
+              </View>
         <View style={styles.iconContainer}>
           <Image
-            source={require("../assets/images/get_help_icons/shieldicon.png")}
+            source={require("../../../assets/images/get_help_icons/shieldicon.png")}
             style={styles.shieldIconImage}
             resizeMode="contain"
           />
@@ -39,7 +57,7 @@ export default function GetHelpPage() {
             onPress={() => router.push("/chat-rescuer")}
           >
             <Image
-              source={require("../assets/images/get_help_icons/3916603 1.png")}
+              source={require("../../../assets/images/get_help_icons/3916603 1.png")}
               style={styles.optionIconImage}
               resizeMode="contain"
             />
@@ -51,7 +69,7 @@ export default function GetHelpPage() {
             onPress={() => router.push("/chatbot")}
           >
             <Image
-              source={require("../assets/images/get_help_icons/brand-github-copilot_.png")}
+              source={require("../../../assets/images/get_help_icons/brand-github-copilot_.png")}
               style={styles.optionIconImage}
               resizeMode="contain"
             />
@@ -63,7 +81,7 @@ export default function GetHelpPage() {
             onPress={() => router.push("/first-aid-videos")}
           >
             <Image
-              source={require("../assets/images/get_help_icons/video-play-button.png")}
+              source={require("../../../assets/images/get_help_icons/video-play-button.png")}
               style={styles.optionIconImage}
               resizeMode="contain"
             />

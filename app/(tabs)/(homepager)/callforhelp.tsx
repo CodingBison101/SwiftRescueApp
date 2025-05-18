@@ -16,7 +16,7 @@ import {
   GestureHandlerRootView,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
-import { styles } from "./styles/styles.js";
+import { styles } from "../../../assets/styles/styles.js";
 
 export default function CallForHelpPage() {
   const router = useRouter();
@@ -33,10 +33,10 @@ export default function CallForHelpPage() {
 
   const caseOptions = ["Stuck", "In Danger", "Other"];
   const audioSource = [
-    require("../assets/sounds/siren.mp3"),
-    require("../assets/sounds/siren-imed1.mp3"),
-    require("../assets/sounds/siren-imed2.mp3"),
-    require("../assets/sounds/siren-imed3.mp3"),
+    require("../../../assets/sounds/siren.mp3"),
+    require("../../../assets/sounds/siren-imed1.mp3"),
+    require("../../../assets/sounds/siren-imed2.mp3"),
+    require("../../../assets/sounds/siren-imed3.mp3"),
   ];
 
   const player = useAudioPlayer(audioSource[Math.round(Math.random() * 3)]);
@@ -125,6 +125,23 @@ export default function CallForHelpPage() {
     <View style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+                        <TouchableOpacity
+                          onPress={() => router.replace("/")}
+                          style={styles.backButton}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 28,
+                              fontWeight: "500",
+                            }}
+                          >
+                            ‹ Back
+                          </Text>
+                        </TouchableOpacity>
+                
+                        <View style={{ width: 40 }} />
+                      </View>
         <View style={localstyles.caseSection}>
           <Text style={localstyles.caseTitle}>What is your case:</Text>
 

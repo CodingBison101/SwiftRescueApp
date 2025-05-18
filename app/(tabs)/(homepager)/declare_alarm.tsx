@@ -15,12 +15,8 @@ import {
   View,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
-// Assuming your global styles are in './styles/styles.js'
-// You might need to adjust the import path or use local styles
-import { styles as globalStyles } from "./styles/styles.js";
+import { styles as globalStyles } from "../../../assets/styles/styles.js";
 
-
-// Sample items for the picker
 const alarmTypes = [
   { label: "Fire", value: "fire" },
   { label: "Medical Emergency", value: "medical" },
@@ -36,10 +32,9 @@ export default function DeclareAlarmPage() {
   );
   const [image, setImage] = useState<string | null>(null);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
-  const [successModalVisible, setSuccessModalVisible] = useState(false); // Added for new success modal
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
 
   const pickImage = async () => {
-    // Ask for permission
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
       Alert.alert(
@@ -62,7 +57,6 @@ export default function DeclareAlarmPage() {
   };
 
   const openCamera = async () => {
-    // Ask for permission
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
       Alert.alert(
@@ -85,30 +79,27 @@ export default function DeclareAlarmPage() {
 
   const handleSubmit = () => {
     if (!selectedAlarmType) {
-      alert("Missing Information"); // Changed alert to Alert.alert
+      alert("Missing Information"); 
       return;
     }
-    // Add any other validation if needed (e.g., image required)
     setConfirmModalVisible(true);
   };
 
   const handleConfirmSubmission = () => {
-    // Here you would typically send the data to your backend
     console.log("Submitting:", {
       alarmType: selectedAlarmType,
       imageUri: image,
     });
     setConfirmModalVisible(false);
-    setSuccessModalVisible(true); // Show new success modal
+    setSuccessModalVisible(true);
 
-    // Reset form fields here or in closeSuccessModal
     setSelectedAlarmType(null);
     setImage(null);
   };
 
   const closeSuccessModal = () => {
     setSuccessModalVisible(false);
-    router.back(); // Or navigate to a home screen
+    router.back();
   };
 
   return (
@@ -117,13 +108,13 @@ export default function DeclareAlarmPage() {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
           <TouchableOpacity
-            onPress={() => router.back()}
+            onPress={() => router.replace("/")}
             style={styles.backButton}
           >
             <Text style={styles.backButtonText}>‹</Text>
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Declare Alarm</Text>
-          <View style={{ width: 40 }} /> {/* Spacer for centering title */}
+          <View style={{ width: 40 }} />
         </View>
 
         <Text style={styles.label}>Type of Alarm:</Text>
@@ -173,7 +164,6 @@ export default function DeclareAlarmPage() {
           <Text style={globalStyles.actionButtonText}>Submit Alarm</Text>
         </TouchableOpacity>
 
-        {/* Confirmation Modal */}
         <Modal
           animationType="fade"
           transparent={true}
@@ -184,8 +174,8 @@ export default function DeclareAlarmPage() {
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Confirm Submission</Text> {/* Changed to local style */}
-              <Text style={styles.modalText}> {/* Changed to local style */}
+              <Text style={styles.modalTitle}>Confirm Submission</Text>
+              <Text style={styles.modalText}>
                 Are you sure you want to declare this alarm?
               </Text>
               <View style={styles.modalButtonsRow}>
@@ -216,7 +206,6 @@ export default function DeclareAlarmPage() {
           </View>
         </Modal>
 
-        {/* Success Modal - New */}
         <Modal
           animationType="fade"
           transparent={true}
@@ -236,7 +225,7 @@ export default function DeclareAlarmPage() {
                     globalStyles.modalButton,
                     globalStyles.confirmButton,
                     styles.okSuccessButton,
-                  ]} // Use a specific style if needed or combine
+                  ]}
                   onPress={closeSuccessModal}
                 >
                   <Text style={globalStyles.confirmButtonText}>OK</Text>
@@ -256,7 +245,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   scrollContainer: {
-    paddingBottom: 30, // Ensure scroll content isn't hidden by nav bar or similar
+    paddingBottom: 30,
     paddingHorizontal: 20,
   },
   header: {
@@ -270,7 +259,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   backButtonText: {
-    fontSize: 24,
+    fontWeight : "bold",
+    fontSize: 38,
     color: "#333",
   },
   headerTitle: {
@@ -291,7 +281,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   imageButton: {
-    width: "48%", // Adjust as needed
+    width: "48%",
     paddingVertical: 12,
   },
   imagePreviewContainer: {
@@ -339,7 +329,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   modalTitle: {
-    fontSize: 22, // Adjusted size
+    fontSize: 22,
     fontWeight: "600",
     marginBottom: 10,
     textAlign: "center",
@@ -359,64 +349,56 @@ const styles = StyleSheet.create({
   modalButton: {
     width: "48%",
     alignItems: "center",
-    paddingVertical: 12, // Ensure consistent padding
-    borderRadius: 8, // Ensure consistent border radius
+    paddingVertical: 12,
+    borderRadius: 8,
   },
   successIcon: {
-    fontSize: 50, // Adjusted size
-    color: "#4CAF50", // Green color for success
+    fontSize: 50,
+    color: "#4CAF50",
     marginBottom: 15,
   },
   modalSingleButton: {
-    width: "100%", // Button takes full width of modal content area
-    marginTop: 10, // Spacing above the button
-    alignItems: "center", // Center the button itself if its style has a fixed width less than 100%
+    width: "100%",
+    marginTop: 10,
+    alignItems: "center",
   },
   okSuccessButton: {
-    width: "60%", // Example width, adjust as needed
+    width: "60%",
     paddingVertical: 12,
-    // It will use globalStyles.confirmButton for background and text color
   },
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     fontSize: 16,
-    paddingVertical: 14, // Increased padding for better touch area
+    paddingVertical: 14,
     paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: "#E0E0E0", // Lighter, more subtle border
+    borderColor: "#E0E0E0",
     borderRadius: 8,
-    color: "#333333", // Standard dark text color
-    paddingRight: 30, // to ensure the text is never behind the icon
-    backgroundColor: "#FFFFFF", // Clean white background
+    color: "#333333",
+    paddingRight: 30,
+    backgroundColor: "#FFFFFF",
     marginBottom: 20,
-    // Optional: add a subtle shadow for iOS
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 1 },
-    // shadowOpacity: 0.05,
-    // shadowRadius: 1,
   },
   inputAndroid: {
     fontSize: 16,
     paddingHorizontal: 12,
-    paddingVertical: 12, // Adjusted for Android consistency
+    paddingVertical: 12,
     borderWidth: 1,
-    borderColor: "#E0E0E0", // Lighter, more subtle border
+    borderColor: "#E0E0E0",
     borderRadius: 8,
-    color: "#333333", // Standard dark text color
-    paddingRight: 30, // to ensure the text is never behind the icon
-    backgroundColor: "#FFFFFF", // Clean white background
+    color: "#333333",
+    paddingRight: 30,
+    backgroundColor: "#FFFFFF",
     marginBottom: 20,
-    // Optional: add elevation for Android shadow
-    // elevation: 1,
   },
   placeholder: {
-    color: "#A0A0A0", // Softer placeholder color
+    color: "#A0A0A0",
     fontSize: 16,
   },
   iconContainer: {
-    top: Platform.OS === "ios" ? 16 : 18, // Adjusted for new padding
+    top: Platform.OS === "ios" ? 16 : 18,
     right: 12,
   },
 });

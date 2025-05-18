@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 import { useRouter } from 'expo-router';
 import { FlatList, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { styles as style } from '../../../assets/styles/styles.js';
 const statusBarHeight =
   Platform.OS === 'android'
     ? Constants.statusBarHeight
@@ -44,6 +44,23 @@ export default function FirstAidVideosScreen() {
   return (
     <SafeAreaView style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      <View style={style.header}>
+                      <TouchableOpacity
+                        onPress={() => router.replace("/")}
+                        style={style.backButton}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 28,
+                            fontWeight: "500",
+                          }}
+                        >
+                          ‹ Back
+                        </Text>
+                      </TouchableOpacity>
+              
+                      <View style={{ width: 40 }} />
+                    </View>
       <View style={styles.container}>
         <FlatList
           data={FIRST_AID_VIDEOS_DATA}

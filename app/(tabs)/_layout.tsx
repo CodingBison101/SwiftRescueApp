@@ -64,6 +64,16 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="(homepager)"
+        options={{
+          href: null,
+          title: "Homepage",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="settings" size={24} color="gray" />
+          ),
+        }}
+      />
     </Tabs>
     
   );

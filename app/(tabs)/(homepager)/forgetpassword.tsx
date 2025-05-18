@@ -1,17 +1,17 @@
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  View,
+  Alert,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-  Platform,
-  StyleSheet,
-  Alert,
+  View,
 } from "react-native";
-import { useRouter } from "expo-router";
-import { styles } from "./styles/styles.js";
+import { styles } from "../../../assets/styles/styles.js";
 
 const statusBarHeight =
   Platform.OS === "android" ? StatusBar.currentHeight : 0;
