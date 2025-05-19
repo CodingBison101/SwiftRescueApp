@@ -20,6 +20,16 @@ export const styles = StyleSheet.create({
     marginTop: Platform.OS === "ios" ? 8 : 10,
     paddingTop: 15,
   },
+  indexButton: {
+
+    backgroundColor: "#fc6e21",
+    padding: 15,
+    marginVertical: 8,
+    marginHorizontal: 16, // Add horizontal margin for items
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
   headerContainer: {
     width: "100%",
     flexDirection: "row",
@@ -90,7 +100,8 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   loginButtonText: {
-    color: "black",
+    alignSelf: "center",
+    color: "white",
     fontSize: 18,
     fontWeight: "bold",
   },

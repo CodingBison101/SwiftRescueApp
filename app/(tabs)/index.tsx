@@ -1,274 +1,247 @@
-import Constants from 'expo-constants';
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import * as Font from "expo-font";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
-  Dimensions,
-  Image,
-  Platform,
+  Alert,
   SafeAreaView,
   StatusBar,
+  StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
-  View
-} from 'react-native';
-import { styles } from '../../assets/styles/styles.js';
-
-const windowWidth = Dimensions.get('window').width;
-
-const statusBarHeight = Platform.OS === 'android' 
-  ? Constants.statusBarHeight 
-  : StatusBar.currentHeight || 0;
-
-export default function App() {
+  View,
+} from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons"; // Add this import
+import { styles } from "../../assets/styles/styles.js";
+export default function LoginPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // 1. Add state
   const router = useRouter();
-  const [featureModalVisible, setFeatureModalVisible] = useState(false);
-  const [featureTitle, setFeatureTitle] = useState('');
-  const [featureDescription, setFeatureDescription] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  const showFeature = (title: React.SetStateAction<string>, description: React.SetStateAction<string>) => {
-    setFeatureTitle(title);
-    setFeatureDescription(description);
-    setFeatureModalVisible(true);
+  useEffect(() => {
+    Font.loadAsync({
+      "ADLaM Display": require("../../assets/fonts/ADLaMDisplay-Regular.ttf"),
+    }).then(() => setFontsLoaded(true));
+  }, []);
+
+  const handleLogin = () => {
+    if (username && password) {
+      router.push('/(tabs)/(meat)/checkplans');
+    } else {
+      alert("Please enter both username and password");
+    }
   };
 
+  if (!fontsLoaded) return null;
+
   return (
-    <View style={styles.safeContainer}>
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      <SafeAreaView style={styles.container}>
-      
-        <View style={styles.headerContainer}>
-          <View style={styles.appTitleContainer}>
-            <Image 
-              source={require('../../assets/images/icon.png')} 
-              style={styles.appIcon} 
-            />
-            <Image 
-              source={require('../../assets/images/title.png')} 
-              style={styles.appTitle} 
-            />
+    <SafeAreaView style={localStyles.Container}>
+      <StatusBar barStyle="light-content" backgroundColor="#FF5500" />
+      <View style={localStyles.header}>
+        <View style={{ width: 40 }} />
+      </View>
+
+      <View style={styles.topSection}>
+        <Text
+          style={{
+            marginLeft: -150,
+            alignSelf: "center",
+            color: "white",
+            fontSize: 75,
+            fontFamily: "ADLaM Display",
+          }}
+        >
+          Login
+        </Text>
+        <Text
+          style={{
+            alignSelf: "center",
+            color: "white",
+            fontSize: 75,
+            marginLeft: 70,
+            fontFamily: "ADLaM Display",
+          }}
+        >
+          Below
+        </Text>
+      </View>
+      <View style={styles.formSection}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Email or Username"
+            value={username}
+            onChangeText={setUsername}
+          />
+          <View style={localStyles.iconContainer}>
+            <Text style={styles.inputIcon}>✉️</Text>
           </View>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Password"
+            secureTextEntry={!showPassword} // 2. Use state here
+            value={password}
+            onChangeText={setPassword}
+          />
           <TouchableOpacity
-            style={styles.loginButton}
-            onPress={() => router.push('/login')}>
-            <Text style={styles.loginButtonText}>Login</Text>
-            <Text style={styles.loginIcon}>👤</Text>
+            style={localStyles.iconContainer}
+            onPress={() => setShowPassword((prev) => !prev)} // 3. Toggle state
+          >
+            <MaterialCommunityIcons
+              name={showPassword ? "eye-outline" : "eye-off-outline"} // 4. Change icon
+              size={24}
+              color="#888"
+            />
           </TouchableOpacity>
         </View>
 
-        <View style={styles.buttonGrid}>
-          <View style={styles.row}>
-            <TouchableOpacity 
-              style={styles.gridButton} 
-              onPress={() => router.push('/checkplans')}>
-              <Text style={styles.gridButtonText}>Check Plans</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={styles.gridButton}
-              onPress={() => router.push('/gethelp')}>
-              <Text style={styles.gridButtonText}>Get Help</Text>
-            </TouchableOpacity>
-          </View>
-          
-          <View style={styles.centerButtonContainer}>
-            <TouchableOpacity 
-              style={styles.centerButton}
-              onPress={() => router.push('/callforhelp')}>
-              <Text style={styles.centerButtonText}>Call{'\n'}for{'\n'}Help</Text>
-            </TouchableOpacity>
-          </View>
-          
-          <View style={styles.row}>
-            <TouchableOpacity 
-              style={styles.gridButton}
-              onPress={() => router.push('/declare_alarm')}>
-              <Text style={styles.gridButtonText}>Declare{'\n'}Hazard</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={styles.gridButton}
-              onPress={() => router.push('/gethazard')}>
-              <Text style={styles.gridButtonText}>Get{'\n'}Hazards{'\n'}Info</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.optionsRow}>
+          <TouchableOpacity
+            style={styles.rememberContainer}
+            onPress={() => setRememberMe(!rememberMe)}
+          >
+            <View
+              style={[styles.checkbox, rememberMe && styles.checkboxChecked]}
+            >
+              {rememberMe && <Text style={styles.checkmark}>✓</Text>}
+            </View>
+            <Text style={styles.rememberText}>Remember Me</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => router.push("/forgetpassword")}>
+            <Text style={styles.forgotText}>Forgot Password?</Text>
+          </TouchableOpacity>
         </View>
 
-       
-      </SafeAreaView>
-    </View>
+        <TouchableOpacity style={localStyles.Button} onPress={handleLogin}>
+          <Text style={localStyles.LoginText}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
+
+const localStyles = StyleSheet.create({
+  header: {
+    backgroundColor: "#FF5500",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconContainer: {
+    position: "absolute",
+    right: 15,
+    top: 15,
+  },
+  Container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  LoginText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  Button: {
+    backgroundColor: "#FF5500",
+    borderRadius: 25,
+    padding: 15,
+    alignItems: "center",
+  },
+});
 /*
 const styles = StyleSheet.create({
-  safeContainer: {
+  topSection: {
+    backgroundColor: "#FF5500",
+    height: "35%",
+    justifyContent: "center",
+    paddingLeft: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  loginText: {
+    color: "white",
+    fontSize: 75,
+    fontFamily: "Instrument Sans",
+  },
+  belowText: {
+    color: "white",
+    fontSize: 75,
+    marginLeft: 110,
+    fontFamily: "Instrument Sans",
+  },
+  formSection: {
     flex: 1,
-    backgroundColor: '#fff',
-    // Add extra padding for Android devices
-    paddingTop: Platform.OS === 'android' ? statusBarHeight : 0,
+    paddingHorizontal: 40,
+    paddingTop: 40,
   },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+  inputContainer: {
+    marginBottom: 20,
+    position: "relative",
   },
-  headerContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 15,
-    paddingHorizontal: 15,
-    marginBottom: 10,
-    // Additional top margin for safety
-    marginTop: Platform.OS === 'android' ? 0 : 8,
+  input: {
+    backgroundColor: "#f0f0f0",
+    borderRadius: 10,
+    padding: 15,
+    fontSize: 16,
+    paddingRight: 40,
   },
-  appTitleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: -15,
+  iconContainer: {
+    position: "absolute",
+    right: 15,
+    top: 15,
   },
-  appIcon: {
-    width: 50,
-    height: 50,
+  inputIcon: {
+    fontSize: 20,
   },
-  appTitle: {
-    width: 130,
-    height: 50,
-    marginBottom: 5,
+  optionsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 40,
+  },
+  rememberContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  checkbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "#FF8866",
+    marginRight: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checkboxChecked: {
+    backgroundColor: "#FF8866",
+  },
+  checkmark: {
+    color: "white",
+    fontSize: 14,
+  },
+  rememberText: {
+    fontSize: 14,
+  },
+  forgotText: {
+    color: "#FF8866",
+    fontSize: 14,
   },
   loginButton: {
-    backgroundColor: '#f0f0f0',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
+    backgroundColor: "#FF5500",
+    borderRadius: 25,
+    padding: 15,
+    alignItems: "center",
   },
   loginButtonText: {
-    fontSize: 22,
-    marginRight: 10,
-  },
-  loginIcon: {
-    fontSize: 24,
-    opacity: 0.6,
-  },
-  buttonGrid: {
-    width: windowWidth,
-    height: '80%', // Reduced from 85% to ensure it fits
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 4,
-    marginTop: 10, // Added margin to ensure spacing from header
-  },
-  row: {
-    width: '100%',
-    height: '45%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginVertical: 0,
-  },
-  gridButton: {
-    backgroundColor: '#FF5500',
-    width: '48%',
-    height: '98%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: '1%',
-    marginVertical: '1%',
-  },
-  gridButtonText: {
-    color: 'white',
-    fontSize: 36,
-    textAlign: 'center',
-  },
-  centerButtonContainer: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    width: 180,
-    height: 180,
-    marginLeft: -90,
-    marginTop: -90,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 10,
-  },
-  centerButton: {
-    width: 180,
-    height: 180,
-    borderRadius: 90,
-    backgroundColor: '#e71b1b',
-    borderWidth: 10,
-    borderColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.4,
-    shadowRadius: 5,
-  },
-  centerButtonText: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    width: '80%',
-    maxWidth: 300,
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  modalText: {
-    fontSize: 16,
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginTop: 10,
-  },
-  modalSingleButton: {
-    width: '100%',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  modalButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    minWidth: 100,
-    alignItems: 'center',
-  },
-  confirmButton: {
-    backgroundColor: '#e71b1b',
-  },
-  confirmButtonText: {
-    color: 'white',
-  },
-  cancelButton: {
-    backgroundColor: '#f0f0f0',
-  },
-  cancelButtonText: {
-    color: '#333',
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });*/
