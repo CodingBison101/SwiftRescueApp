@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import {
   Dimensions,
   Image,
-  Modal,
   Platform,
   SafeAreaView,
   StatusBar,
@@ -95,26 +94,7 @@ export default function App() {
           </View>
         </View>
 
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={featureModalVisible}
-          onRequestClose={() => setFeatureModalVisible(false)}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>{featureTitle}</Text>
-              <Text style={styles.modalText}>{featureDescription}</Text>
-              
-              <View style={styles.modalSingleButton}>
-                <TouchableOpacity 
-                  style={[styles.modalButton, styles.confirmButton]}
-                  onPress={() => setFeatureModalVisible(false)}>
-                  <Text style={styles.confirmButtonText}>OK</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
+       
       </SafeAreaView>
     </View>
   );

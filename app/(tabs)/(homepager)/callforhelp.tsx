@@ -1,8 +1,11 @@
 import { useAudioPlayer } from "expo-audio";
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
+  Alert,
   Animated,
+  Image,
   Modal,
   SafeAreaView,
   StatusBar,
@@ -10,7 +13,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import {
   GestureHandlerRootView,
@@ -27,9 +30,10 @@ export default function CallForHelpPage() {
     null
   );
   const [successModalVisible, setSuccessModalVisible] = useState(false);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
 
   const animatedHeight = useRef(new Animated.Value(0)).current;
-  const animatedOpacity= useRef(new Animated.Value(0)).current;
+  const animatedOpacity = useRef(new Animated.Value(0)).current;
 
   const caseOptions = ["Stuck", "In Danger", "Other"];
   const audioSource = [
@@ -49,7 +53,6 @@ export default function CallForHelpPage() {
   const playAudiofr = async () => {
     player.play();
     await delay(3000);
-    router.replace("/callforhelp");
   };
   const handleCaseSelection = (caseType: string) => {
     setSelectedCase(caseType);
@@ -96,12 +99,9 @@ export default function CallForHelpPage() {
   };
 
   const handleAlertForOthers = () => {
-    if (!selectedCase) {
-      alert("Please select your case first");
-      return;
-    }
-    if (selectedCase === "Other" && !otherCaseText.trim()) {
-      alert("Please provide details for 'Other'");
+    // Instead of checking for selectedCase, check for capturedImage
+    if (!capturedImage) {
+      alert("Please provide a photo before alerting for others.");
       return;
     }
     setConfirmType("others");
@@ -121,27 +121,49 @@ export default function CallForHelpPage() {
     router.back();
   };
 
+  // Camera logic from declare_alarm.tsx
+  const openCamera = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission Denied",
+        "Sorry, we need camera permissions to make this work!"
+      );
+      return;
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      setCapturedImage(result.assets[0].uri);
+    }
+  };
+
   return (
     <View style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-                        <TouchableOpacity
-                          onPress={() => router.replace("/")}
-                          style={styles.backButton}
-                        >
-                          <Text
-                            style={{
-                              fontSize: 28,
-                              fontWeight: "500",
-                            }}
-                          >
-                            ‹ Back
-                          </Text>
-                        </TouchableOpacity>
-                
-                        <View style={{ width: 40 }} />
-                      </View>
+          <TouchableOpacity
+            onPress={() => router.replace("/")}
+            style={styles.backButton}
+          >
+            <Text
+              style={{
+                fontSize: 28,
+                fontWeight: "500",
+              }}
+            >
+              ‹ Back
+            </Text>
+          </TouchableOpacity>
+
+          <View style={{ width: 40 }} />
+        </View>
         <View style={localstyles.caseSection}>
           <Text style={localstyles.caseTitle}>What is your case:</Text>
 
@@ -205,7 +227,7 @@ export default function CallForHelpPage() {
 
             <TouchableOpacity
               style={styles.actionButton}
-              onPress={handleAlertForOthers}
+              onPress={openCamera}
             >
               <View
                 style={{
@@ -225,6 +247,61 @@ export default function CallForHelpPage() {
             >
               <Text style={localstyles.alarmIcon}>🚨</Text>
             </TouchableWithoutFeedback>
+            {/* Show Open Camera button always for others */}
+            <TouchableOpacity
+              style={{
+                marginTop: 20,
+                alignSelf: "center",
+                backgroundColor: "#FF5500",
+                paddingVertical: 12,
+                paddingHorizontal: 24,
+                borderRadius: 8,
+              }}
+              onPress={openCamera}
+            >
+              <Text style={{ color: "white", fontSize: 16 }}>
+                Open Camera
+              </Text>
+            </TouchableOpacity>
+            {/* Optional: Show image preview if captured */}
+            {capturedImage && (
+              <View style={{ alignItems: "center", marginTop: 10 }}>
+                <Text style={{ marginBottom: 5 }}>Image Preview:</Text>
+                <Image
+                  source={{ uri: capturedImage }}
+                  style={{
+                    width: 200,
+                    height: 150,
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    borderColor: "#ddd",
+                  }}
+                />
+                <TouchableOpacity onPress={() => setCapturedImage(null)}>
+                  <Text style={{ color: "#FF5500", marginTop: 5 }}>
+                    Remove Image
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            {/* Show Confirm button below Alert for others if photo is provided */}
+            {capturedImage && (
+              <TouchableOpacity
+                style={{
+                  marginTop: 20,
+                  alignSelf: "center",
+                  backgroundColor: "#FF5500",
+                  paddingVertical: 12,
+                  paddingHorizontal: 24,
+                  borderRadius: 8,
+                }}
+                onPress={handleAlertForOthers}
+              >
+                <Text style={{ color: "white", fontSize: 16 }}>
+                  Confirm Alert for Others
+                </Text>
+              </TouchableOpacity>
+            )}
           </GestureHandlerRootView>
         </View>
         <Modal
@@ -419,25 +496,23 @@ const localstyles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     marginBottom: 20,
-  },
- 
-  modalButton: {
-    padding: 10,
-    borderRadius: 5,
-    width: "45%",
-    alignItems: "center",
-  },
-  cancelButton: {
-    backgroundColor: "#ccc",
-  },
-  cancelButtonText: {
-    color: "#000",
     fontSize: 16,
   },
   confirmButton: {
     justifyContent: "center",
     backgroundColor: "#FF5500",
+  },width: "45%",
+  confirmButtonText: {r",
+    color: "white",
+    fontSize: 16,
+  },backgroundColor: "#ccc",
+  modalSingleButton: {
+    alignItems: "center",
+    marginTop: 20,
+    width: "100%",
   },
+  ,onfirmButton: {
+}); justifyContent: "center",
   confirmButtonText: {
     color: "white",
     fontSize: 16,

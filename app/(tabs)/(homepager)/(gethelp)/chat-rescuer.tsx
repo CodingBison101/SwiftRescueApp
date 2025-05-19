@@ -127,7 +127,7 @@ export default function ChatRescuerScreen() {
   return (
     <SafeAreaView style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      {/* Header 
+   
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -138,7 +138,7 @@ export default function ChatRescuerScreen() {
         <Text style={styles.headerTitle}>Rescue Chat</Text>
         <View style={styles.headerRight} />
       </View>
-      */}
+      
       {/* Chat area */}
       <FlatList
         data={messages}
