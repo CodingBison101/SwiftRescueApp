@@ -100,6 +100,14 @@ export default function CallForHelpPage() {
 
   const handleAlertForOthers = () => {
     // Instead of checking for selectedCase, check for capturedImage
+    if (!selectedCase) {
+      alert("Please select your case first");
+      return;
+    }
+    if (selectedCase === "Other" && !otherCaseText.trim()) {
+      alert("Please provide details for 'Other'");
+      return;
+    }
     if (!capturedImage) {
       alert("Please provide a photo before alerting for others.");
       return;

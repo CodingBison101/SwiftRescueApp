@@ -1,4 +1,3 @@
-import { Video } from "expo-av";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
@@ -39,13 +38,10 @@ export default function CheckPlans() {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <Video
-            source={require("../../assets/media/dick-penis.mp4")}
-            style={{ width: "100%", height: "100%", alignSelf : "center",}}
-            useNativeControls
-            isLooping
-            shouldPlay
-          />
+          <Image
+              source={require("../../assets/images/mapplaceholder.jpg")}
+              style={{width: "100%", height: "100%", borderRadius: 12}}
+            />
         </View>
       </SafeAreaView>
     </View>
